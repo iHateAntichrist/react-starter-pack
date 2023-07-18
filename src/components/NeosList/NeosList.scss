@@ -1,0 +1,20 @@
+.card {
+  border: 1px solid #413f3f;
+  background-color: #eee;
+  list-style-type: none;
+  padding: 4px;
+
+  width: 320px;
+  margin-bottom: 12px;
+
+  &__item {
+    font-size: 14px;
+
+    margin: 0;
+    padding-bottom: 5px;
+  }
+
+  &--red {
+    background-color: red;
+  }
+}

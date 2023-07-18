@@ -1,8 +1,13 @@
-import React from 'react';
-import './App.scss';
+import React from "react";
 
-export const App = () => (
-  <div className="starter">
-    React starter pack
-  </div>
-);
+import { NeosList } from "./components/NeosList/NeosList";
+
+function App() {
+  return (
+    <div className="App">
+      <NeosList />
+    </div>
+  );
+}
+
+export default App;
