@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-/* eslint-disable react/jsx-one-expression-per-line */
 import './NeosList.scss';
 import classNames from 'classnames';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getNeos } from '../../services/neo';
 import { Loader } from '../Loader';
 
@@ -75,38 +74,45 @@ export const NeosList = () => {
         {neos.length === 0 ? (
           <Loader />
         ) : (
-          neos.map(({
-            date,
-            maxDiameter,
-            hazardousCount,
-            closestNeo,
-            fastestNeo,
-          }) => (
-            <li
-              key={Math.random()}
-              className={classNames('card', {
-                'card--red': highestHazardousCounts.some(
-                  neo => neo.hazardousCount === hazardousCount,
-                ),
-              })}
-            >
-              <h2 className="card__item">
-                Date: { date }
-              </h2>
-              <p className="card__item">
-                Max Estimated Diameter (km): {maxDiameter}
-              </p>
-              <p className="card__item">
-                Potentially Hazardous NEOs: {hazardousCount}
-              </p>
-              <p className="card__item">
-                Closest NEO (km): {closestNeo}
-              </p>
-              <p className="card__item">
-                Fastest NEO (kph): {fastestNeo}
-              </p>
-            </li>
-          ))
+          <>
+            { neos.map(({
+              date,
+              maxDiameter,
+              hazardousCount,
+              closestNeo,
+              fastestNeo,
+            }) => (
+              <li
+                key={date}
+                className={classNames('card', {
+                  'card--red': highestHazardousCounts.some(
+                    neo => neo.hazardousCount === hazardousCount,
+                  ),
+                })}
+              >
+                <h2 className="card__item">
+                  Date:
+                  {` ${date}`}
+                </h2>
+                <p className="card__item">
+                  Max Estimated Diameter (km):
+                  {` ${maxDiameter}`}
+                </p>
+                <p className="card__item">
+                  Potentially Hazardous NEOs:
+                  {` ${hazardousCount}`}
+                </p>
+                <p className="card__item">
+                  Closest NEO (km):
+                  {` ${closestNeo}`}
+                </p>
+                <p className="card__item">
+                  Fastest NEO (kph):
+                  {` ${fastestNeo}`}
+                </p>
+              </li>
+            ))}
+          </>
         )}
       </ul>
     </div>
