@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable max-len */
 const API_KEY = 'PXjG2k4gTiQT1uLnemaLCDAX3RDa7jRbL69WIROx';
 
 const prepareDate = (date) => {
@@ -11,12 +13,12 @@ const prepareDate = (date) => {
 export const getNeos = (day) => {
   const today = new Date();
   const startDate = prepareDate(
-    new Date(today.getFullYear(), today.getMonth(), day)
+    new Date(today.getFullYear(), today.getMonth(), day),
   );
   const endDate = prepareDate(
-    new Date(today.getFullYear(), today.getMonth(), day)
+    new Date(today.getFullYear(), today.getMonth(), day),
   );
-  
+
   const URL = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${API_KEY}`;
 
   return fetch(URL)
@@ -31,25 +33,23 @@ export const getNeos = (day) => {
       const neosData = Object.values(data.near_earth_objects);
 
       const maxDiameter = Math.max(
-        ...neosData.flatMap((neo) =>
-          neo.map((item) => item.estimated_diameter.kilometers.estimated_diameter_max)
-        )
+        ...neosData.flatMap(neo => neo.map(item => item.estimated_diameter.kilometers.estimated_diameter_max)),
       );
 
       const hazardousCount = neosData
         .flat()
-        .filter((neo) => neo.is_potentially_hazardous_asteroid).length;
+        .filter(neo => neo.is_potentially_hazardous_asteroid).length;
 
       const closestNeo = Math.min(
         ...neosData
           .flat()
-          .map((neo) => neo.close_approach_data[0].miss_distance.kilometers)
+          .map(neo => neo.close_approach_data[0].miss_distance.kilometers),
       );
 
       const fastestNeo = Math.max(
         ...neosData
           .flat()
-          .map((neo) => neo.close_approach_data[0].relative_velocity.kilometers_per_hour)
+          .map(neo => neo.close_approach_data[0].relative_velocity.kilometers_per_hour),
       );
 
       return {

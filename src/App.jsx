@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { NeosList } from "./components/NeosList/NeosList";
+import { NeosList } from './components/NeosList/NeosList';
 
 function App() {
   return (

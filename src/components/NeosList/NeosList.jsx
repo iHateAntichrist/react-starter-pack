@@ -1,18 +1,19 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-console */
+/* eslint-disable react/jsx-one-expression-per-line */
 import './NeosList.scss';
-import classNames from "classnames";
+import classNames from 'classnames';
 
-import React, { useEffect, useState } from "react";
-import { getNeos } from "../../services/neo";
-import { Loader } from "../Loader";
+import React, { useEffect, useState } from 'react';
+import { getNeos } from '../../services/neo';
+import { Loader } from '../Loader';
 
 export const NeosList = () => {
   const [neos, setNeos] = useState([]);
   const [currentDay, setCurrentDay] = useState(1);
 
-  const loadNeosFromServer = async () => {
+  const loadNeosFromServer = async() => {
     try {
-      const neosData = await getNeos(currentDay); 
+      const neosData = await getNeos(currentDay);
       const newNeo = {
         date: neosData.date,
         maxDiameter: neosData.maxDiameter,
@@ -22,7 +23,7 @@ export const NeosList = () => {
       };
 
       setNeos((prevNeos) => {
-        let updatedNeos = [...prevNeos];
+        const updatedNeos = [...prevNeos];
 
         updatedNeos.push(newNeo);
 
@@ -41,16 +42,16 @@ export const NeosList = () => {
     const updateCurrentDay = (prevDay) => {
       if (prevDay >= new Date().getDate()) {
         return 1;
-      } else {
-        return prevDay + 1;
       }
+
+      return prevDay + 1;
     };
-  
-    const interval = setInterval(async () => {
+
+    const interval = setInterval(async() => {
       await loadNeosFromServer();
       setCurrentDay(updateCurrentDay);
     }, 5000);
-  
+
     return () => {
       clearInterval(interval);
     };
@@ -58,8 +59,9 @@ export const NeosList = () => {
 
   const getHighestHazardousCounts = () => {
     const sortedNeos = [...neos].sort(
-      (a, b) => b.hazardousCount - a.hazardousCount
+      (a, b) => b.hazardousCount - a.hazardousCount,
     );
+
     return sortedNeos.slice(0, 2);
   };
 
@@ -68,36 +70,41 @@ export const NeosList = () => {
   return (
     <div>
       <h1>Near Orbital Objects (NEO)</h1>
-  
+
       <ul>
         {neos.length === 0 ? (
           <Loader />
         ) : (
-          neos.map(({ 
-            date, 
-            maxDiameter, 
-            hazardousCount, 
-            closestNeo, 
-            fastestNeo 
+          neos.map(({
+            date,
+            maxDiameter,
+            hazardousCount,
+            closestNeo,
+            fastestNeo,
           }) => (
-            <li 
+            <li
               key={Math.random()}
-              className={classNames("card", {
-                "card--red": highestHazardousCounts.some(
-                  (neo) => neo.hazardousCount === hazardousCount
+              className={classNames('card', {
+                'card--red': highestHazardousCounts.some(
+                  neo => neo.hazardousCount === hazardousCount,
                 ),
               })}
             >
               <h2 className="card__item">
-                Date: {date}</h2>
+                Date: { date }
+              </h2>
               <p className="card__item">
-                Max Estimated Diameter (km): {maxDiameter}</p>
+                Max Estimated Diameter (km): {maxDiameter}
+              </p>
               <p className="card__item">
-                Potentially Hazardous NEOs: {hazardousCount}</p>
+                Potentially Hazardous NEOs: {hazardousCount}
+              </p>
               <p className="card__item">
-                Closest NEO (km): {closestNeo}</p>
+                Closest NEO (km): {closestNeo}
+              </p>
               <p className="card__item">
-                Fastest NEO (kph): {fastestNeo}</p>
+                Fastest NEO (kph): {fastestNeo}
+              </p>
             </li>
           ))
         )}
